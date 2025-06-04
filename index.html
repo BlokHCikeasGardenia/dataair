@@ -14,7 +14,7 @@
     }
     .main-title {
       text-align: center;
-      font-size: 1rem;
+      font-size: 1.5rem;
       font-weight: 700;
       margin: 2rem 0 0.5rem 0;
       letter-spacing: 1px;
@@ -37,8 +37,8 @@
       align-items: center;
     }
     .controls input[type="search"] {
-      padding: 0.5em 1em;
-      font-size: 1em;
+      padding: 0.4em 0.9em;
+      font-size: 0.96em;
       border-radius: 4px;
       border: 1px solid #bce0fa;
       flex: 1 1 160px;
@@ -47,10 +47,10 @@
       box-sizing: border-box;
     }
     .controls label, .controls select {
-      font-size: 1em;
+      font-size: 0.96em;
     }
     .controls select {
-      padding: 0.5em 1em;
+      padding: 0.4em 0.8em;
       border-radius: 4px;
       border: 1px solid #bce0fa;
       background: #f1f7fd;
@@ -59,7 +59,7 @@
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
-      font-size: 1em;
+      font-size: 0.83em; /* <-- kecil */
       background: #fff;
       min-width: 600px;
     }
@@ -72,12 +72,13 @@
       font-weight: 600;
       text-align: left;
       color: #1976d2;
-      padding: 0.7em 0.8em;
+      padding: 0.45em 0.7em;
       transition: background 0.2s;
       white-space: nowrap;
       max-width: 300px;
       overflow: hidden;
       text-overflow: ellipsis;
+      font-size: 0.9em;
     }
     /* Sticky columns for displayed columns */
     th.sticky-col-displayed-1, td.sticky-col-displayed-1 {
@@ -104,10 +105,10 @@
       white-space: nowrap;
     }
     tbody td {
-      padding: 0.65em 0.9em;
+      padding: 0.45em 0.7em;
       border-bottom: 1px solid #e3effc;
       border-right: 1px solid #e3effc;
-      font-size: 1em;
+      font-size: 0.96em;
       background: #fff;
       max-width: 220px;
       word-break: break-word;
@@ -133,15 +134,18 @@
     }
     /* Responsive */
     @media (max-width: 700px) {
-      table { font-size: 0.95em; }
+      table { font-size: 0.78em; }
       .table-container { padding: 0.3rem; }
       .controls { gap: 0.5rem; }
     }
     @media (max-width: 480px) {
-      table { font-size: 0.87em; }
+      table { font-size: 0.73em; }
       .controls input[type="search"], .controls select {
-        font-size: 0.98em;
-        padding: 0.4em 0.7em;
+        font-size: 0.92em;
+        padding: 0.3em 0.5em;
+      }
+      .main-title {
+        font-size: 1.12rem;
       }
     }
     /* Pagination */
@@ -151,18 +155,19 @@
       align-items: center;
       margin: 1em 0 0.2em 0;
       flex-wrap: wrap;
-      font-size: 1em;
+      font-size: 0.98em;
     }
     .pagination button {
       border: none;
       background: #e6f2fb;
       color: #1976d2;
-      padding: 0.4em 0.9em;
+      padding: 0.32em 0.7em;
       border-radius: 4px;
       cursor: pointer;
       font-weight: 500;
       transition: background 0.2s;
-      min-width: 34px;
+      min-width: 28px;
+      font-size: 0.98em;
     }
     .pagination button.active, .pagination button:focus {
       background: #2491e8;
@@ -178,9 +183,9 @@
     .pagination-summary {
       margin-left: auto;
       color: #1976d2;
-      font-size: 0.96em;
+      font-size: 0.97em;
     }
-    ::-webkit-scrollbar { height: 8px; background: #e3effc;}
+    ::-webkit-scrollbar { height: 7px; background: #e3effc;}
     ::-webkit-scrollbar-thumb { background: #bce0fa; border-radius: 6px;}
   </style>
 </head>
