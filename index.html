@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Data Air11</title>
+  <title>Data Air12</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Inter:400,600&display=swap" rel="stylesheet">
   <style>
@@ -22,13 +22,14 @@
     }
     .table-container {
       max-width: 100vw;
+      /* Hanya scroll-x untuk tabel lebar */
       overflow-x: auto;
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.06);
       margin: 1.5rem auto;
       padding: 1rem;
-      /* HAPUS overflow-y & max-height AGAR STICKY HEADER NEMPEL DI WINDOW */
+      /* JANGAN ADA overflow-y atau max-height di sini! */
     }
     .controls {
       display: flex;
@@ -74,7 +75,6 @@
       text-align: left;
       color: #1976d2;
       padding: 0.25em 0.7em;
-      transition: background 0.2s;
       white-space: nowrap;
       max-width: 300px;
       overflow: hidden;
@@ -84,11 +84,10 @@
       line-height: 1.3;
       vertical-align: middle;
     }
-    /* Sticky columns for displayed columns */
     th.sticky-col-displayed-1, td.sticky-col-displayed-1 {
       position: sticky;
       left: 0;
-      z-index: 32;
+      z-index: 40;
       background: #e6f2fb;
       border-right: 1px solid #bce0fa;
       width: 7ch !important;
@@ -100,7 +99,7 @@
     th.sticky-col-displayed-2, td.sticky-col-displayed-2 {
       position: sticky;
       left: var(--sticky-left-2, 56px);
-      z-index: 31;
+      z-index: 39;
       background: #e6f2fb;
       border-right: 1px solid #bce0fa;
       width: 10ch !important;
@@ -109,9 +108,6 @@
       text-align: left !important;
       white-space: nowrap;
     }
-    th.sticky-col-displayed-1 { z-index: 40; }
-    th.sticky-col-displayed-2 { z-index: 39; }
-
     tbody td {
       padding: 0.28em 0.7em;
       border-bottom: 1px solid #e3effc;
