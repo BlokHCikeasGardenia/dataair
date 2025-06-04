@@ -79,8 +79,8 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    /* Sticky columns */
-    th.sticky-col, td.sticky-col {
+    /* Sticky columns for displayed columns */
+    th.sticky-col-displayed-1, td.sticky-col-displayed-1 {
       position: sticky;
       left: 0;
       z-index: 2;
@@ -91,7 +91,7 @@
       text-align: left !important;
       white-space: nowrap;
     }
-    th.sticky-col-2, td.sticky-col-2 {
+    th.sticky-col-displayed-2, td.sticky-col-displayed-2 {
       position: sticky;
       left: var(--sticky-left-2, 120px);
       z-index: 2;
@@ -115,10 +115,12 @@
     tbody tr:nth-child(even) td {
       background: #f1f7fd;
     }
-    tbody td:not(.sticky-col):not(.sticky-col-2) {
+    /* Alignment: sticky columns left, others right */
+    tbody td:not(.sticky-col-displayed-1):not(.sticky-col-displayed-2) {
       text-align: right;
     }
-    tbody td.sticky-col, tbody td.sticky-col-2 {
+    tbody td.sticky-col-displayed-1,
+    tbody td.sticky-col-displayed-2 {
       background: #e6f2fb;
       font-weight: 500;
     }
@@ -234,19 +236,28 @@
       return rows.filter(r => r.length && !(r.length===1 && r[0]===""));
     }
 
+    // Get displayed column indexes (not hidden)
+    function getDisplayedCols() {
+      return header.map((_,i) => i).filter(i => !HIDE_COLS.includes(i));
+    }
+
     // Render Table
     function renderTable() {
       const table = document.getElementById('liveTable');
       const thead = table.querySelector('thead');
       const tbody = table.querySelector('tbody');
+      const displayedCols = getDisplayedCols();
       // Header
       let ths = '';
       header.forEach((h, i) => {
-        let cls = '';
-        if (i===0) cls = 'sticky-col hide-col';
-        else if (i===1) cls = 'sticky-col-2';
-        else if (i===3 || i===4) cls = 'hide-col';
-        ths += `<th class="${cls}">${h}</th>`;
+        let baseClass = '';
+        if (HIDE_COLS.includes(i)) baseClass = 'hide-col';
+        else {
+          const displayedIndex = displayedCols.indexOf(i);
+          if (displayedIndex === 0) baseClass = 'sticky-col-displayed-1';
+          else if (displayedIndex === 1) baseClass = 'sticky-col-displayed-2';
+        }
+        ths += `<th class="${baseClass}">${h}</th>`;
       });
       thead.innerHTML = `<tr>${ths}</tr>`;
 
@@ -256,22 +267,25 @@
       let trs = '';
       dataPage.forEach(row => {
         trs += '<tr>';
-        row.forEach((cell, i) => {
-          let cls = '';
-          if (i===0) cls = 'sticky-col hide-col';
-          else if (i===1) cls = 'sticky-col-2';
-          else if (i===3 || i===4) cls = 'hide-col';
-          trs += `<td class="${cls}">${cell}</td>`;
-        });
+        for (let i = 0; i < row.length; ++i) {
+          let baseClass = '';
+          if (HIDE_COLS.includes(i)) baseClass = 'hide-col';
+          else {
+            const displayedIndex = displayedCols.indexOf(i);
+            if (displayedIndex === 0) baseClass = 'sticky-col-displayed-1';
+            else if (displayedIndex === 1) baseClass = 'sticky-col-displayed-2';
+          }
+          trs += `<td class="${baseClass}">${row[i]}</td>`;
+        }
         trs += '</tr>';
       });
       tbody.innerHTML = trs;
 
       // Adjust sticky left for col-2
       setTimeout(() => {
-        const th0 = table.querySelector('th.sticky-col');
-        const left = th0 ? (th0.offsetWidth || 120) : 120;
-        document.querySelectorAll('.sticky-col-2').forEach(e => e.style.setProperty('--sticky-left-2', left+'px'));
+        const th1 = table.querySelector('th.sticky-col-displayed-1');
+        const left = th1 ? (th1.offsetWidth || 120) : 120;
+        document.querySelectorAll('.sticky-col-displayed-2').forEach(e => e.style.setProperty('--sticky-left-2', left+'px'));
       }, 50);
 
       renderPagination();
