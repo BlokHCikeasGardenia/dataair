@@ -28,6 +28,7 @@
       box-shadow: 0 2px 12px rgba(0,0,0,0.06);
       margin: 1.5rem auto;
       padding: 1rem;
+      /* HAPUS overflow-y & max-height AGAR STICKY HEADER NEMPEL DI WINDOW */
     }
     .controls {
       display: flex;
@@ -66,7 +67,7 @@
     thead th {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 30;
       background: #e6f2fb;
       border-bottom: 2px solid #bce0fa;
       font-weight: 600;
@@ -87,7 +88,7 @@
     th.sticky-col-displayed-1, td.sticky-col-displayed-1 {
       position: sticky;
       left: 0;
-      z-index: 12;
+      z-index: 32;
       background: #e6f2fb;
       border-right: 1px solid #bce0fa;
       width: 7ch !important;
@@ -99,7 +100,7 @@
     th.sticky-col-displayed-2, td.sticky-col-displayed-2 {
       position: sticky;
       left: var(--sticky-left-2, 56px);
-      z-index: 11;
+      z-index: 31;
       background: #e6f2fb;
       border-right: 1px solid #bce0fa;
       width: 10ch !important;
@@ -108,8 +109,8 @@
       text-align: left !important;
       white-space: nowrap;
     }
-    th.sticky-col-displayed-1 { z-index: 20; }
-    th.sticky-col-displayed-2 { z-index: 19; }
+    th.sticky-col-displayed-1 { z-index: 40; }
+    th.sticky-col-displayed-2 { z-index: 39; }
 
     tbody td {
       padding: 0.28em 0.7em;
