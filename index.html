@@ -90,20 +90,21 @@
       z-index: 12;
       background: #e6f2fb;
       border-right: 1px solid #bce0fa;
-      min-width: 110px;
-      max-width: 220px;
+      width: 7ch !important;
+      min-width: 7ch !important;
+      max-width: 7ch !important;
       text-align: left !important;
       white-space: nowrap;
     }
     th.sticky-col-displayed-2, td.sticky-col-displayed-2 {
       position: sticky;
-      left: var(--sticky-left-2, 120px);
+      left: var(--sticky-left-2, 56px);
       z-index: 11;
       background: #e6f2fb;
       border-right: 1px solid #bce0fa;
-      width: 90px !important;
-      min-width: 90px !important;
-      max-width: 90px !important;
+      width: 10ch !important;
+      min-width: 10ch !important;
+      max-width: 10ch !important;
       text-align: left !important;
       white-space: nowrap;
     }
@@ -121,7 +122,7 @@
       height: 1.95em;
       line-height: 1.35;
       vertical-align: middle;
-      white-space: nowrap;    /* Mencegah isi kolom di-wrap */
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -215,11 +216,8 @@
     <div class="pagination" id="pagination"></div>
   </div>
   <script>
-    // Kolom yang disembunyikan (0-based): 0 (pertama), 3 (keempat), 4 (kelima)
     const HIDE_COLS = [0, 3, 4];
-    // Link CSV Google Sheets
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRQBSWp7dBKus6wO8G-vBtSW9ZpKlRbmNLbXsaWQZeaQU_ZEY9p9EujIGTyIPVzb5cgVTlq9d0Lf29P/pub?gid=914322979&single=true&output=csv';
-
     let allData = [], filteredData = [], header = [];
     let currentPage = 1, rowsPerPage = 10, searchTerm = "";
 
@@ -291,7 +289,7 @@
 
       setTimeout(() => {
         const th1 = table.querySelector('th.sticky-col-displayed-1');
-        const left = th1 ? (th1.offsetWidth || 120) : 120;
+        const left = th1 ? (th1.offsetWidth || 56) : 56; // 7ch ~ 56px
         document.querySelectorAll('.sticky-col-displayed-2').forEach(e => e.style.setProperty('--sticky-left-2', left+'px'));
       }, 50);
 
