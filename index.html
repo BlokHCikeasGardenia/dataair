@@ -72,14 +72,14 @@
       font-weight: 600;
       text-align: left;
       color: #1976d2;
-      padding: 0.25em 0.7em; /* Penyesuaian tinggi header */
+      padding: 0.25em 0.7em;
       transition: background 0.2s;
       white-space: nowrap;
       max-width: 300px;
       overflow: hidden;
       text-overflow: ellipsis;
       font-size: 0.9em;
-      height: 2.1em; /* Tinggi header mengikuti font kecil */
+      height: 2.1em;
       line-height: 1.3;
       vertical-align: middle;
     }
@@ -87,7 +87,7 @@
     th.sticky-col-displayed-1, td.sticky-col-displayed-1 {
       position: sticky;
       left: 0;
-      z-index: 12; /* lebih tinggi dari header biasa */
+      z-index: 12;
       background: #e6f2fb;
       border-right: 1px solid #bce0fa;
       min-width: 110px;
@@ -107,16 +107,11 @@
       text-align: left !important;
       white-space: nowrap;
     }
-    /* Agar header sticky tidak tumpang tindih dengan sticky kolom */
-    th.sticky-col-displayed-1 {
-      z-index: 20;
-    }
-    th.sticky-col-displayed-2 {
-      z-index: 19;
-    }
+    th.sticky-col-displayed-1 { z-index: 20; }
+    th.sticky-col-displayed-2 { z-index: 19; }
 
     tbody td {
-      padding: 0.28em 0.7em; /* Penyesuaian tinggi row */
+      padding: 0.28em 0.7em;
       border-bottom: 1px solid #e3effc;
       border-right: 1px solid #e3effc;
       font-size: 0.85em;
@@ -126,6 +121,9 @@
       height: 1.95em;
       line-height: 1.35;
       vertical-align: middle;
+      white-space: nowrap;    /* Mencegah isi kolom di-wrap */
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     tbody tr:nth-child(even) td {
       background: #f1f7fd;
@@ -141,11 +139,9 @@
     tr:last-child td {
       border-bottom: 2px solid #bce0fa;
     }
-    /* Hidden columns */
     .hide-col {
       display: none !important;
     }
-    /* Responsive */
     @media (max-width: 700px) {
       table { font-size: 0.78em; }
       .table-container { padding: 0.3rem; }
@@ -161,7 +157,6 @@
         font-size: 1.12rem;
       }
     }
-    /* Pagination */
     .pagination {
       display: flex;
       gap: 0.5em;
@@ -235,7 +230,6 @@
     }
 
     function parseCSV(str) {
-      // Support quoted values with commas inside
       const rows = [];
       let row = [], val = '', inQuotes = false;
       for (let i = 0, c; i < str.length; ++i) {
@@ -254,18 +248,15 @@
       return rows.filter(r => r.length && !(r.length===1 && r[0]===""));
     }
 
-    // Get displayed column indexes (not hidden)
     function getDisplayedCols() {
       return header.map((_,i) => i).filter(i => !HIDE_COLS.includes(i));
     }
 
-    // Render Table
     function renderTable() {
       const table = document.getElementById('liveTable');
       const thead = table.querySelector('thead');
       const tbody = table.querySelector('tbody');
       const displayedCols = getDisplayedCols();
-      // Header
       let ths = '';
       header.forEach((h, i) => {
         let baseClass = '';
@@ -279,7 +270,6 @@
       });
       thead.innerHTML = `<tr>${ths}</tr>`;
 
-      // Data
       const startIdx = (currentPage - 1) * rowsPerPage;
       const dataPage = filteredData.slice(startIdx, startIdx + rowsPerPage);
       let trs = '';
@@ -299,7 +289,6 @@
       });
       tbody.innerHTML = trs;
 
-      // Adjust sticky left for col-2
       setTimeout(() => {
         const th1 = table.querySelector('th.sticky-col-displayed-1');
         const left = th1 ? (th1.offsetWidth || 120) : 120;
@@ -309,9 +298,7 @@
       renderPagination();
     }
 
-    // Search
     function filterData() {
-      // Only exact "PELANGGAN" (case-insensitive, no extra text) pada kolom ke-4
       let baseFiltered = allData.filter(row =>
         (row[3]||'').trim().toUpperCase() === "PELANGGAN"
       );
@@ -326,7 +313,6 @@
       currentPage = 1;
     }
 
-    // Pagination
     function renderPagination() {
       const pageDiv = document.getElementById('pagination');
       const totalRows = filteredData.length;
@@ -349,7 +335,6 @@
       renderTable();
     };
 
-    // Handle Controls
     document.getElementById('searchInput').addEventListener('input', e => {
       searchTerm = e.target.value;
       filterData();
@@ -361,7 +346,6 @@
       renderTable();
     });
 
-    // Initial Load
     (async function() {
       try {
         const rows = await fetchCSV(CSV_URL);
