@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Live Table Google Sheets</title>
+  <title>Live Table Google Sheets (Filter Pelanggan)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Inter:400,600&display=swap" rel="stylesheet">
   <style>
@@ -313,7 +313,8 @@
         const rows = await fetchCSV(CSV_URL);
         if (!rows.length) throw new Error('Data kosong');
         header = rows[0];
-        allData = rows.slice(1);
+        // FILTER: hanya data yang kolom ke-3 mengandung "PELANGGAN"
+        allData = rows.slice(1).filter(row => (row[2] || '').toUpperCase().includes('PELANGGAN'));
         filterData();
         renderTable();
       } catch (e) {
