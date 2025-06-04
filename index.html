@@ -226,7 +226,7 @@
       if (rows.length < 2) return rows; // Only header or empty
       const header = rows[0];
       const filtered = rows.slice(1).filter(row =>
-        (row[3] || '').toUpperCase().only('PELANGGAN')
+        (row[3] || '').toUpperCase() === "PELANGGAN"
       );
       return [header, ...filtered];
     }
