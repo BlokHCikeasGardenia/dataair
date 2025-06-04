@@ -59,32 +59,35 @@
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
-      font-size: 0.93em; /* <-- kecil */
+      font-size: 0.93em;
       background: #fff;
       min-width: 600px;
     }
     thead th {
       position: sticky;
       top: 0;
-      z-index: 3;
+      z-index: 10;
       background: #e6f2fb;
       border-bottom: 2px solid #bce0fa;
       font-weight: 600;
       text-align: left;
       color: #1976d2;
-      padding: 0.45em 0.7em;
+      padding: 0.25em 0.7em; /* Penyesuaian tinggi header */
       transition: background 0.2s;
       white-space: nowrap;
       max-width: 300px;
       overflow: hidden;
       text-overflow: ellipsis;
       font-size: 0.9em;
+      height: 2.1em; /* Tinggi header mengikuti font kecil */
+      line-height: 1.3;
+      vertical-align: middle;
     }
     /* Sticky columns for displayed columns */
     th.sticky-col-displayed-1, td.sticky-col-displayed-1 {
       position: sticky;
       left: 0;
-      z-index: 2;
+      z-index: 12; /* lebih tinggi dari header biasa */
       background: #e6f2fb;
       border-right: 1px solid #bce0fa;
       min-width: 110px;
@@ -95,7 +98,7 @@
     th.sticky-col-displayed-2, td.sticky-col-displayed-2 {
       position: sticky;
       left: var(--sticky-left-2, 120px);
-      z-index: 2;
+      z-index: 11;
       background: #e6f2fb;
       border-right: 1px solid #bce0fa;
       width: 90px !important;
@@ -104,19 +107,29 @@
       text-align: left !important;
       white-space: nowrap;
     }
+    /* Agar header sticky tidak tumpang tindih dengan sticky kolom */
+    th.sticky-col-displayed-1 {
+      z-index: 20;
+    }
+    th.sticky-col-displayed-2 {
+      z-index: 19;
+    }
+
     tbody td {
-      padding: 0.45em 0.7em;
+      padding: 0.28em 0.7em; /* Penyesuaian tinggi row */
       border-bottom: 1px solid #e3effc;
       border-right: 1px solid #e3effc;
       font-size: 0.85em;
       background: #fff;
       max-width: 220px;
       word-break: break-word;
+      height: 1.95em;
+      line-height: 1.35;
+      vertical-align: middle;
     }
     tbody tr:nth-child(even) td {
       background: #f1f7fd;
     }
-    /* Alignment: sticky columns left, others right */
     tbody td:not(.sticky-col-displayed-1):not(.sticky-col-displayed-2) {
       text-align: right;
     }
