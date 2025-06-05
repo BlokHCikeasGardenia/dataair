@@ -12,6 +12,44 @@
       margin: 0;
       padding: 0;
     }
+    /* Loading Spinner */
+    .loader-bg {
+      position: fixed;
+      z-index: 9999;
+      inset: 0;
+      background: rgba(241,247,253,0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.25s;
+    }
+    .loader {
+      border: 5px solid #e3effc;
+      border-top: 5px solid #2491e8;
+      border-radius: 50%;
+      width: 54px;
+      height: 54px;
+      animation: spin 1.1s linear infinite;
+      margin-bottom: 12px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+    .loader-text {
+      color: #2491e8;
+      font-weight: 500;
+      text-align: center;
+      font-size: 1.07em;
+      letter-spacing: 0.02em;
+      margin-top: 4px;
+      font-family: inherit;
+    }
+    .loader-bg.hide {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
     .main-title {
       text-align: center;
       font-size: 1.5rem;
@@ -157,7 +195,6 @@
     .hide-col {
       display: none !important;
     }
-    
     footer {
       text-align: left;
       margin-top: 2.5em;
@@ -253,6 +290,13 @@
   </style>
 </head>
 <body>
+  <!-- Loading Spinner -->
+  <div class="loader-bg" id="loader-bg">
+    <div>
+      <div class="loader"></div>
+      <div class="loader-text">Mengambil data...</div>
+    </div>
+  </div>
   <div class="main-title">Data Air</div>
   <div class="legenda">
     <strong>Daftar Singkatan</strong><br>
@@ -284,6 +328,13 @@
 
     let allData = [], filteredData = [], header = [];
     let currentPage = 1, rowsPerPage = 10, searchTerm = "";
+
+    // Sembunyikan loading
+    function hideLoader() {
+      const loader = document.getElementById('loader-bg');
+      if (loader) loader.classList.add('hide');
+      setTimeout(() => { if(loader) loader.style.display='none'; }, 500);
+    }
 
     async function fetchCSV(url) {
       const res = await fetch(url);
@@ -418,6 +469,8 @@
         renderTable();
       } catch (e) {
         document.getElementById('liveTable').outerHTML = '<div style="color:red;padding:1em;">Gagal memuat data: '+e.message+'</div>';
+      } finally {
+        hideLoader();
       }
     })();
   </script>
